@@ -1,0 +1,47 @@
+pipeline {
+
+  environment {
+    registry = "mounabal/docker_pipeline"
+    registryCredential = "dockerhub"
+    dockerImage = ""
+  }
+  agent any 
+  stages {
+    stage ('CloningGit'){
+      steps {
+          git 'https://github.com/Mounagit/dockerfile_pipeline.git'
+      }
+    }
+    stage ('Building') {
+          
+     
+      steps {
+          script {
+              dockerImage = docker.build registry + ":1.0"
+  
+          }
+      }
+  }
+    stage ('DeployImage') {
+      steps {
+          script {
+              docker.withRegistry('',registryCredential){
+                  dockerImage.push()
+              }
+              }
+    
+          }
+    }
+    stage ('PullImage') {
+      steps {
+          script {
+              docker.withRegistry(''){
+                  dockerImage.pull()
+      
+                }
+            }
+      }
+       }
+  }
+  
+}
