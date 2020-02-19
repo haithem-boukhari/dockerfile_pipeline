@@ -1,0 +1,29 @@
+node {
+    parallel(
+        'Pre-prod': {
+            node('master'){
+                docker.image('haithemboukhari/image_git_maven:v1.0').inside(){
+                    stage('pull_projet1'){
+                        git 'https://github.com/haithem-boukhari/hello_world_maven2.git'
+                    }
+                    stage('build1'){
+                        sh 'mvn clean package'
+                    }
+                }    
+            }    
+        },
+            
+        'Prod': {
+            node('toto'){
+                docker.image('haithemboukhari/image_git_maven:v1.0').inside(){
+                    stage('pull_projet2'){
+                        git 'https://github.com/haithem-boukhari/hello_world_maven2.git'
+                    }
+                    stage('build2'){
+                        sh 'mvn clean package'
+                    }
+                }    
+            }    
+        }
+    )  
+}
