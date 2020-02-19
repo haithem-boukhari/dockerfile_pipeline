@@ -1,5 +1,5 @@
 
-node { node { label 'toto' } }
+node { { label 'toto' } 
 
      def registry = "mounabal/docker_pipeline"
      def registryCredential = "dockerhub"
