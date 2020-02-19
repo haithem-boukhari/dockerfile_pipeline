@@ -8,7 +8,8 @@ node {
   
     stage ('CloningGit'){
           
-          git 'https://github.com/Mounagit/dockerfile_pipeline.git'
+          git url: 'https://github.com/Mounagit/dockerfile_pipeline.git',
+               branch: 'master',
                CredentialId = "Github"
       }
       
