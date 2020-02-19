@@ -10,7 +10,7 @@ node {
           
           git url: 'https://github.com/Mounagit/dockerfile_pipeline.git',
                branch: 'master',
-               CredentialId = "Github"
+               CredentialId: "Github"
       }
       
     stage ('Building') {
