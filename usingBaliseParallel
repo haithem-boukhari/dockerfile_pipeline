@@ -1,0 +1,35 @@
+node ('slave_jenkins1') {
+
+     def registry = "mounabal/docker_pipeline"
+     def registryCredential = "dockerhub"
+     def dockerImage = ""
+
+  
+    stage ('CloningGit'){
+          
+          git url: 'https://github.com/JPGibart/simple-java-maven-app.git'
+             
+      }
+    
+    stage ('CloningGit'){
+          
+          git url: 'https://github.com/Mounagit/dockerfile_pipeline.git',
+               branch: 'master',
+               credentialsId: "Github"
+    }
+    
+    parallel (
+        'BuilderenParallel' : {
+            stage ('BuilwithMaven') {
+               
+                sh '''
+                mvn -v
+                touch fichier_maven
+                '''
+            }
+            stage ('BuildDocker') {
+                dockerImage = docker.build registry + ":1.0"
+            }
+        }
+       )
+}
